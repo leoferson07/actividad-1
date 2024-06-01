@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var accountsRouter = require('./routes/accounts');
 var savingsAccountsRouter = require('./routes/savingsAccounts');
-//var cooperative = require('./routes/cooperatives')
+var cooperative = require('./routes/cooperatives')
 var app = express();
 
 // view engine setup
@@ -29,7 +29,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/accounts', accountsRouter);
 app.use('/savings', savingsAccountsRouter);
-//app.use('/cooperatives', cooperative)
+app.use('/cooperatives', cooperative)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
