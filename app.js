@@ -6,9 +6,9 @@ var logger = require('morgan');
 var PORT = 3001;
 
 var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
-//var accountsRouter = require('./routes/accounts');
-//var savingsAccountsRouter = require('./routes/savingsAccounts');
+var usersRouter = require('./routes/users');
+var accountsRouter = require('./routes/accounts');
+var savingsAccountsRouter = require('./routes/savingsAccounts');
 //var cooperative = require('./routes/cooperatives')
 var app = express();
 
@@ -26,9 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //!rutas
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-//app.use('/accounts', accountsRouter);
-//app.use('/savings', savingsAccountsRouter);
+app.use('/users', usersRouter);
+app.use('/accounts', accountsRouter);
+app.use('/savings', savingsAccountsRouter);
 //app.use('/cooperatives', cooperative)
 
 // catch 404 and forward to error handler
