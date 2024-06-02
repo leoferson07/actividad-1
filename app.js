@@ -10,10 +10,8 @@ var usersRouter = require('./routes/users');
 var accountsRouter = require('./routes/accounts');
 var savingsAccountsRouter = require('./routes/savingsAccounts');
 var cooperative = require('./routes/cooperatives')
-<<<<<<< HEAD
+
 var userState = require('./routes/userState');
-=======
->>>>>>> 1008c6aef2fd2b063eaecb2b8024e4418cc3a4d5
 var app = express();
 
 // view engine setup
@@ -34,12 +32,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/accounts', accountsRouter);
 app.use('/savings', savingsAccountsRouter);
-<<<<<<< HEAD
+
 app.use('/cooperatives', cooperative);
 app.use('/state', userState);
-=======
+
 app.use('/cooperatives', cooperative)
->>>>>>> 1008c6aef2fd2b063eaecb2b8024e4418cc3a4d5
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
