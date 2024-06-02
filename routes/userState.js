@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../controladores/users.c')
+const State = require('../controladores/userState.c');
 
 router.get('/', function(req, res){
-  res.render("index", {titulo: "SISTEMA BANCARIO SOCIAL"})
+  State.mostrar()
+  .then((resul)=>{
+    res.send(resul)
+  })
 });
 
 module.exports = router;

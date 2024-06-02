@@ -1,44 +1,54 @@
 let usuariosBD = [
     {
         id: 1,
-        nombre: "leoferson",
-        constraseña: "123456"
+        nombre: "leonardo Torres",
+        contraseña: "123456"
     },
     {
-        id: 12,
-        nombre: "luis",
-        constraseña: "123456"
+        id: 2,
+        nombre: "Maria Perez",
+        contraseña: "123456"
     },
 ];
  class usuarios {
     todos(){
-        return usuariosBD
-    }
-    crear(usuario){
-        usuariosBD.push(usuario)
-    }
-    editar(id, nuevosDatos){
-        const usuarioIndex = usuariosBD.findIndex(usuario => usuario.id === id);
-        if (usuarioIndex !== -1) {
-            usuariosBD[usuarioIndex] = { ...usuariosBD[usuarioIndex], ...nuevosDatos };
-            return usuariosBD[usuarioIndex];
-        } else {
-            throw new Error('Usuario no encontrado');
-        }
-    
-    }
-    eliminar(id) {
-        const numeroId = Number(id)
-        const usuarioIndex = usuariosBD.findIndex(usuario => Number(usuario.id) === numeroId);
-        if (usuarioIndex !== -1) {
-            const usuarioEliminado = usuariosBD.splice(usuarioIndex, 1);
-            return usuarioEliminado[0];
-        } else {
-            throw new Error('Usuario no encontrado');
-        }
-    }
+        return new Promise((resolve, reject)=>{
+            resolve(usuariosBD)
+        })
+    };
 
- }
+    crear(usuario){
+        return new Promise((resolve, reject)=>{
+            resolve( usuariosBD.push(usuario))
+        })
+    };
+
+    editar(id, nuevosDatos){
+        return new Promise((resolve, reject)=>{
+            const numeroId = Number(id)
+            const usuarioIndex = usuariosBD.findIndex(usuario => usuario.id === numeroId);
+            if (usuarioIndex !== -1) {
+                usuariosBD[usuarioIndex] = { ...usuariosBD[usuarioIndex], ...nuevosDatos }
+                resolve(usuariosBD[usuarioIndex])
+            }else{
+                reject(new Error('Usuario no encontrado'))
+            }
+        })
+    };
+
+    eliminar(id) {
+        return new Promise((resolve, reject)=>{
+            const numeroId = Number(id)
+            const usuarioIndex = usuariosBD.findIndex(usuario => Number(usuario.id) === numeroId);
+            if (usuarioIndex !== -1) {
+                const usuarioEliminado = usuariosBD.splice(usuarioIndex, 1);
+                resolve(usuarioEliminado[0])
+            }else{
+                reject(new Error('Usuario no encontrado'))
+            }
+        })
+    };
+ };
 
 
  module.exports = new usuarios();

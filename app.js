@@ -6,15 +6,17 @@ var logger = require('morgan');
 var PORT = 3001;
 
 var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
-//var accountsRouter = require('./routes/accounts');
-//var savingsAccountsRouter = require('./routes/savingsAccounts');
-//var cooperative = require('./routes/cooperatives')
+var usersRouter = require('./routes/users');
+var accountsRouter = require('./routes/accounts');
+var savingsAccountsRouter = require('./routes/savingsAccounts');
+var cooperative = require('./routes/cooperatives')
+var userState = require('./routes/userState');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -26,10 +28,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //!rutas
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-//app.use('/accounts', accountsRouter);
-//app.use('/savings', savingsAccountsRouter);
-//app.use('/cooperatives', cooperative)
+app.use('/users', usersRouter);
+app.use('/accounts', accountsRouter);
+app.use('/savings', savingsAccountsRouter);
+app.use('/cooperatives', cooperative);
+app.use('/state', userState);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

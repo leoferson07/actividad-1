@@ -26,12 +26,14 @@ class cuentasAhorros{
         return new Promise((resolve, reject)=>{
             resolve (cuentasAhorro);
         });
-    }
+    };
+    
     ingresar(cuenta){
         return new Promise((resolve, reject)=>{
             resolve(cuentasAhorro.push(cuenta))
         });
-    }
+    };
+
     editar(id, newAccounts){
         return new Promise((resolve, reject)=>{
             const numeroId = Number(id)
@@ -53,7 +55,8 @@ class cuentasAhorros{
                 reject(new Error("cuenta no encontrada"))
             }
         })
-    }
+    };
+
     eliminar(id){
         return new Promise((resolve, reject)=>{
             const numeroId = Number(id)

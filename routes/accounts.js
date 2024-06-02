@@ -36,10 +36,11 @@ router.delete('/:id', function(req, res){
   })
 });
 
-
 router.get('/:fechas-de-pago', function(req, res){
-  const fechasDePago = accounts.mostrarFechasDePago();
-    res.status(200).send({ fechasDePago })
-})
+  accounts.mostrarFechasDePago()
+  .then((resul)=>{
+    res.send({ fechasDePago: resul })
+  })
+});
 
 module.exports = router;
