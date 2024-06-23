@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var { sequelize } = require('./db');
 var PORT = 3001;
 
 var indexRouter = require('./routes/index');
@@ -56,6 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(PORT, ()=>{
+  sequelize.sync({force: true});
   console.log(`server activo en http://localhost:${PORT}`)
 })
 

@@ -1,47 +1,52 @@
 var express = require('express');
 var router = express.Router();
-const usuarios = require('../controladores/users.c')
+const usuarios = require('../controladores/users.c');
 
-router.get('/', function(req, res, next) {
-  usuarios.todos()
-    .then((resul) => {
-      res.render('users', { usuarios: resul });
-    })
-});
-//!ruta para mostrarlo en el thunder client
-// router.get('/', function(req, res, next) {
-//  usuarios.todos()
-//  .then((resul)=>{
-//   res.send(resul)
-//  })
-// });
 
-router.post("/", function(req, res){
-usuarios.crear(req.body)
-.then(()=>{
-  usuarios.todos()
-  .then((resul)=>{
-    res.send(resul)
-    })
-  })
+router.post("/", async (req, res)=>{
+  try {
+      const {id, nombre, contraseña} = req.body;
+      const newUsers = await usuarios.crear({
+          id, nombre, contraseña
+      })
+      
+      res.status(200).send(newUsers);
+  } catch (error) {
+      res.status(404).send(error)
+  }
 });
 
-router.put('/:id', function(req, res){
+router.get('/', async (req, res, next) => {
+  try {
+    const result = await usuarios.todos();
+    res.render('users', { usuarios: result });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.put('/:id', async (req, res) => {
   const id = req.params.id;
   const nuevosDatos = req.body;
-   usuarios.editar(id, nuevosDatos)
-   .then((resul)=>{
-    res.send(resul)
-   })
+
+  try {
+    const result = await usuarios.editar(id, nuevosDatos);
+    res.send(result);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 });
 
-router.delete('/:id', function(req, res){
+router.delete('/:id', async (req, res) => {
   const id = req.params.id;
-   usuarios.eliminar(id)
-   .then(()=>{
-     res.send({ message: 'Usuario eliminado' });
-  })
- });
+
+  try {
+    await usuarios.eliminar(id);
+    res.send({ message: 'Usuario eliminado' });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+});
 
 
 
