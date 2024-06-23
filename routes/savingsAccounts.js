@@ -23,23 +23,28 @@ router.get('/', async (req, res) => {
     }
   });
 
-
-
-router.put('/:id', function(req, res){
+  router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const newAccounts = req.body;
-    cuentasAhorro.editar(id, newAccounts)
-    .then((acc)=>{
-        res.send(acc)
-    })
-});
+  
+    try {
+      const result = await cuentasAhorro.editar(id, newAccounts);
+      res.send(result);
+    } catch (error) {
+      res.status(404).send(error.message);
+    }
+  });
 
-router.delete('/:id', function(req, res){
+  router.delete('/:id', async (req, res) => {
     const id = req.params.id;
-    cuentasAhorro.eliminar(id)
-    .then(()=>{
-        res.send({ message: 'cuenta eliminada'})
-    })
-})
+  
+    try {
+      await cuentasAhorro.eliminar(id);
+      res.send({ message: 'cuenta eliminada' });
+    } catch (error) {
+      res.status(404).send(error.message);
+    }
+  });
+  
 
 module.exports = router;

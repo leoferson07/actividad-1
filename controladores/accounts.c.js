@@ -38,7 +38,7 @@ const {Account} = require('../db')
             const cuentaActualizada = await cuenta.update(nuevaAccounts);
             return cuentaActualizada;
           } else {
-            throw new Error('Usuario no encontrado');
+            throw new Error('cuenta no encontrada');
           }
         } catch (error) {
           throw error;

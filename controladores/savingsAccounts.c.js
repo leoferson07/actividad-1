@@ -29,42 +29,33 @@ class cuentasAhorros{
       }
     };
     
-
-    editar(id, newAccounts){
-        return new Promise((resolve, reject)=>{
-            const numeroId = Number(id)
-            const index = cuentasAhorro.findIndex(acc => acc.id === numeroId)
-            if (index !== -1){
-      const cuenta = cuentasAhorro[index];
-      if (newAccounts.titular) {
-        cuenta.titular = { ...cuenta.titular, ...newAccounts.titular };
-      }
-      if (newAccounts.cuenta) {
-        cuenta.cuenta = { ...cuenta.cuenta, ...newAccounts.cuenta };
-      }
-      if (newAccounts.contacto) {
-        cuenta.contacto = { ...cuenta.contacto, ...newAccounts.contacto };
-      }
-            cuentasAhorro[index] = cuenta            
-            resolve(cuentasAhorro[index])
-            }else{
-                reject(new Error("cuenta no encontrada"))
-            }
-        })
-    };
-
-    eliminar(id){
-        return new Promise((resolve, reject)=>{
-            const numeroId = Number(id)
-        const index = cuentasAhorro.findIndex(acc => acc.id === numeroId);
-        if (index !== -1){
-          const accountsDelete = cuentasAhorro.splice(index, 1);
-          resolve(accountsDelete[0])
-        }else{
-            reject(new Error("cuenta no encontrada"));
+    async editar(id, newAccounts) {
+      try {
+        const cuenta = await Saving.findByPk(id);
+        if (cuenta) {
+          const cuentaActualizada = await cuenta.update(newAccounts);
+          return cuentaActualizada;
+        } else {
+          throw new Error('cuenta no encontrada');
         }
-      })
-    }
+      } catch (error) {
+        throw error;
+      }
+    };
+    
+    async eliminar(id) {
+      try {
+        const cuenta = await Saving.findByPk(id);
+        if (cuenta) {
+          await cuenta.destroy();
+          return { message: 'cuenta eliminada' };
+        } else {
+          throw new Error('cuenta no encontrada');
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
 };
 
 module.exports = new cuentasAhorros();
