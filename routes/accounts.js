@@ -2,45 +2,52 @@ var express = require('express');
 var router = express.Router();
 const accounts = require("../controladores/accounts.c");
 
-router.get('/', function(req, res){
-  accounts.mostrar()
-  .then((resul) =>{
-    res.send(resul)
-  })
-})
-
-router.post('/', function(req, res, next) {
-  accounts.crear(req.body)
-  .then(()=>{
-    accounts.mostrar()
-    .then((resul)=>{
-      res.send(resul);
-    })
-  })
+router.get('/', async (req, res) => {
+  try {
+    const result = await accounts.mostrar();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
-router.put('/:id', function(req, res){
+
+router.post("/", async (req, res)=>{
+  try {
+      const {id, numeroCuenta,nombreBanco, montoPrestamo, duracionPrestamoMeses, nombrePrestatario} = req.body;
+      const newAccount = await accounts.crear({
+          id, numeroCuenta,nombreBanco, montoPrestamo, duracionPrestamoMeses, nombrePrestatario
+      });
+      res.status(200).send(newAccount);
+  } catch (error) {
+      res.status(404).send(error)
+  }
+});
+
+router.put('/:id', async (req, res) => {
   const id = req.params.id;
   const nuevaAccounts = req.body;
-  accounts.editar(id, nuevaAccounts)
-  .then((accountsAct)=>{
-    res.send(accountsAct);
-  })
+
+  try {
+    const result = await accounts.editar(id, nuevaAccounts);
+    res.send(result);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 });
 
-router.delete('/:id', function(req, res){
+router.delete('/:id', async (req, res) => {
   const id = req.params.id;
-  accounts.eliminar(id)
-  .then(()=>{
-    res.send({ message: 'cuenta eliminada'})  
-  })
+
+  try {
+    await accounts.eliminar(id);
+    res.send({ message: 'cuenta eliminada' });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 });
 
-router.get('/:fechas-de-pago', function(req, res){
-  accounts.mostrarFechasDePago()
-  .then((resul)=>{
-    res.send({ fechasDePago: resul })
-  })
-});
+
+
 
 module.exports = router;

@@ -57,7 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(PORT, ()=>{
-  sequelize.sync({force: true});
+  sequelize.sync({force: false});
   console.log(`server activo en http://localhost:${PORT}`)
 })
 

@@ -9,8 +9,8 @@ router.post("/", async (req, res)=>{
       const newUsers = await usuarios.crear({
           id, nombre, contraseña
       })
-      
-      res.status(200).send(newUsers);
+
+       res.status(200).send(newUsers);
   } catch (error) {
       res.status(404).send(error)
   }
