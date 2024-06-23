@@ -1,38 +1,34 @@
-let cuentasAhorro = [
-    {
-        id: 1,
-        titular: {
-          nombre: 'Juan Pérez',
-          documentoIdentidad: '12345678', 
-          fechaNacimiento: '1980-05-15', 
-          direccion: 'Calle Falsa 123, Ciudad, País'
-        },
-        cuenta: {
-          numeroCuenta: '000123456789', // Número único de la cuenta bancaria
-          tipoCuenta: 'ahorro',
-          saldoInicial: 1000.00, 
-          moneda: 'USD', 
-          fechaApertura: '2024-05-28' 
-        },
-        contacto: {
-          telefono: '+1234567890',
-          email: 'juan.perez@example.com' 
-        }
-    },
-];
+const {Saving} = require('../db')
+// let cuentasAhorro = [
+//     {
+//         id: 1,
+//         nombreDelTitular: 'Juan Pérez', 
+//           documentoIdentidad: '12345678',  
+//           numeroCuenta: '000123456789',
+//           tipoCuenta: 'ahorro',
+//           saldoInicial: "1000.00 USD"      
+//     },
+// ];
 
 class cuentasAhorros{
-    mostrar(){
-        return new Promise((resolve, reject)=>{
-            resolve (cuentasAhorro);
-        });
+  async mostrar() {
+    try {
+      const cuentas = await Saving.findAll();
+      return cuentas;
+ } catch (error) {
+      throw error;
+    }
+  };
+  
+  async ingresar(cuenta) {
+    try {
+        const newAccount = await Saving.create(cuenta);
+        return newAccount;
+    } catch (error) {
+        throw error;
+      }
     };
     
-    ingresar(cuenta){
-        return new Promise((resolve, reject)=>{
-            resolve(cuentasAhorro.push(cuenta))
-        });
-    };
 
     editar(id, newAccounts){
         return new Promise((resolve, reject)=>{
