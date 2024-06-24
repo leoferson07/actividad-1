@@ -10,6 +10,7 @@ const {userState} = require('../db');
 // ];
 
 class State{
+    
     async crear (state){
         try {
             const newState = await userState.create(state);

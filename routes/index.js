@@ -6,4 +6,5 @@ router.get('/', function(req, res){
   res.render("index", {titulo: "SISTEMA BANCARIO SOCIAL"})
 });
 
+
 module.exports = router;
