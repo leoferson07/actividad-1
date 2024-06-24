@@ -24,6 +24,8 @@ const userState = usersStateModels(sequelize);
 
 cooperative.hasMany(Miembros, { foreignKey: 'cooperativaId' })
 Miembros.belongsTo(cooperative, { foreignKey: 'cooperativaId' })
+
+
 module.exports = {
     sequelize, User, Account, Saving, Miembros, cooperative, userState
 };
