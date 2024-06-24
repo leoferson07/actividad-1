@@ -51,18 +51,7 @@ class gruposC{
     return resultado;
   }
 
-  //  ingresar(nuevosGrupos) {
-  //     return new Promise((resolve, reject) => {
-  //       if (!Array.isArray(nuevosGrupos) || nuevosGrupos.length === 0) {
-  //         return reject(new Error("Debe enviar un array de cooperativas"));
-  //       } else {
-  //           nuevosGrupos.forEach((grupo) => {
-  //             grupos.push(grupo);
-  //           });
-  //           resolve(grupos);         
-  //       }
-  //     })
-  //     };
+
     
   async mostrar() {
     try {
@@ -75,21 +64,21 @@ class gruposC{
     }
   }
 
-      eliminarUsuarios(nombreGrupo, nombreUsuario){
-        return new Promise((resolve, reject)=>{
-          const grupo = grupos.find(grupo => grupo.nombreCooperativa === nombreGrupo);
-          if (!grupo) {
-            reject(new Error("Grupo no encontrado"));
-          }
-          const usuarioIndex = grupo.miembros.findIndex(usuario => usuario.nombre === nombreUsuario);
-          if (usuarioIndex === -1) {
-            reject( new Error("Usuario no encontrado"));
-          }
-          grupo.miembros.splice(usuarioIndex, 1);
-          resolve(grupo);
+  async eliminar(nombreCooperativa) {
+    try {
+      const cooperativa = await cooperative.findOne({ where: { nombre: nombreCooperativa } });
+      if (!cooperativa) {
+        throw new Error("Cooperativa no encontrada");
+      }
 
-        })
+      await Miembros.destroy({ where: { cooperativaId: cooperativa.id } });
+      await cooperative.destroy({ where: { id: cooperativa.id } });
+
+      return { message: "Cooperativa y sus miembros eliminados correctamente" };
+    } catch (error) {
+      throw error;
     }
+  }
  };
 
 module.exports = new gruposC();
